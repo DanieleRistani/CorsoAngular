@@ -1,0 +1,139 @@
+<section class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 d-flex flex-column align-items-center">
+            <!-- Creazione di un nuovo componente (ng g c ng g c nome-componente) -->
+            <!-- Creazione di un nuovo componente senza il file di test (ng g c nome-componente --skip-tests) -->
+
+
+            <!-- one way binding string {{}} -->
+            <h1>{{returnString()}}</h1>
+            <div>
+
+                <!-- one way binding -->
+                <button class="btn btn-danger mx-2" (click)="btnClick()" type="button"
+                    [disabled]="isDisable">{{title}}</button>
+                <button class="btn btn-danger" (click)="btnClick2()" type="button">{{title2}}</button>
+
+                <!-- one way binding on style propriety-->
+                <button class="btn btn-danger ms-2" (click)="btnClick3()" type="button">{{!isImportant ? "Importante"
+                    :"Non importante"}}</button>
+
+
+            </div>
+
+
+
+            <!-- two way binding Directive(built-in) ngModel modifica di una variabile mediante un input-->
+            <input class="form-control w-25 ms-2 mt-4" type="text" [(ngModel)]="dynamicMessage">
+            <p class="display-1" [style.color]="isImportant ? 'red' : 'black' ">{{dynamicMessage}}</p>
+
+        </div>
+        <hr>
+        <div class="col-12">
+            <h2 class="text-center">NgIF-NgTemplate</h2>
+
+            <!-- ngIf  & ngElse & ng-template-->
+            <p class="text-danger display-1 text-center" *ngIf="isImportant; else notImportant">Questo è un testo
+                importante</p>
+
+            <!-- seconda tipologia -->
+            <ng-template *ngIf="!isImportant;then notImportant, else important"></ng-template>
+
+            <ng-template #notImportant>
+                <p class="text-dark display-1 text-center">è un testo non importante</p>
+            </ng-template>
+
+            <ng-template #important>
+                <p class="text-danger display-1 text-center">Questo è un testo importante</p>
+            </ng-template>
+
+        </div>
+        <hr>
+        <div class="col-2">
+
+
+            <!-- ngFor & ngStyle -->
+            <h2 class="text-center">NgFor</h2>
+
+            <ul class="list-group mb-4">
+
+                <li class="list-group-item d-flex justify-content-start align-items-center"
+                    *ngFor="let person of json; index as i; first as isFirst; last as isLast; odd as isOdd; even as isEven;count as count">
+                    <strong>{{i+1}}</strong>-{{person.name}}
+                    <ng-template *ngIf="person.isOnline;then online, else offline"></ng-template>
+
+                    <!--  ngStyle consente di cambaire lo stile con logiche delle variabili -->
+                    <div class="custom-div mx-1" [ngStyle]="{'background-color': person.isOnline ? 'green' : 'red'}">
+                    </div>
+                    <span class="text-dark ms-2" *ngIf="isFirst"><strong>Primo</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isLast"><strong>Ultimo</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isOdd"><strong>Pari</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isEven"><strong>Dispari</strong></span>
+                </li>
+
+
+                <ng-template #online>
+                    <span class="text-success ms-1"><strong>Online</strong></span>
+                </ng-template>
+
+                <ng-template #offline>
+                    <span class="text-danger ms-1"><strong>offline</strong></span>
+                </ng-template>
+
+            </ul>
+
+        </div>
+        <hr>
+        <div class="col-12">
+
+            <!-- ngSwitch -->
+            <h2 class="text-center">NgSwitch</h2>
+
+            <input class="form-control w-25 mx-auto mt-4" type="number" [(ngModel)]="ngSwitch">
+
+            <div [ngSwitch]="ngSwitch">
+                <p *ngSwitchCase="1" class="display-1 text-center">1</p>
+                <p *ngSwitchCase="2" class="display-1 text-center">2</p>
+                <p *ngSwitchCase="3" class="display-1 text-center">3</p>
+                <p *ngSwitchCase="4" class="display-1 text-center">4</p>
+                <p *ngSwitchCase="5" class="display-1 text-center">5</p>
+                <p *ngSwitchDefault class="display-1 text-center">Nessun valore presente</p>
+            </div>
+
+        </div>
+        <hr>
+        <div class="col-12 ">
+            <!-- ngClass -->
+            <h2 class="text-center">NgClass</h2>
+            <h3 class="text-center">Immettere un numero maggiore di 5</h3>
+
+            <input class="form-control w-25 mx-auto my-4" type="number" [(ngModel)]="number"
+                [ngClass]="{'is-invalid': number<5, 'is-valid': number>5}">
+
+            <ng-template *ngIf="number>5;then success, else error"></ng-template>
+
+            <ng-template #success>
+                <p class="text-success ms-1 text-center"><strong>Numero maggiore di 5</strong></p>
+            </ng-template>
+
+            <ng-template #error>
+                <p class="text-danger ms-1 text-center"><strong>Numero minore di 5</strong></p>
+            </ng-template>
+
+        </div>
+        <hr>
+        <div class="col-12 d-flex flex-column align-items-center">
+            <!-- Passaggio dati a un componente figlio con @Input nel componente figlio con il propriety built-in vado a valorizzare la proprietà [jsonOnChild]="json" -->
+            <h2 class="text-center mb-4">Passaggio dati a un componente figlio</h2>
+            <app-child-of-building [jsonOnChild]="json" (outputString)="ReceiveDataFromChild($event)"></app-child-of-building>
+            <!-- Passaggio dati da un componente figlio al padre andano a usare nel child @Output per dichiarare un evento in questo caso (outputString)  ReceiveDataFromChild($event) invece nel padre-->
+            <h2 class="text-center mb-4">Passaggio dati da un componente figlio al padre</h2>
+            <p>{{stringByChild}}</p>
+
+        </div>
+        <hr>
+       
+
+
+    </div>
+</section>

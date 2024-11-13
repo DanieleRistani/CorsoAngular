@@ -1,0 +1,29 @@
+<ul class="list-group mb-4">
+
+    <li class="list-group-item d-flex justify-content-start align-items-center"
+        *ngFor="let person of jsonOnChild; index as i; first as isFirst; last as isLast; odd as isOdd; even as isEven;count as count">
+        <strong>{{i+1}}</strong>-{{person.name}}
+        <ng-template *ngIf="person.isOnline;then online, else offline"></ng-template>
+
+        <!--  ngStyle consente di cambaire lo stile con logiche delle variabili -->
+        <div class="custom-div mx-1" [ngStyle]="{'background-color': person.isOnline ? 'green' : 'red'}">
+        </div>
+        <span class="text-dark ms-2" *ngIf="isFirst"><strong>Primo</strong></span>
+        <span class="text-dark ms-2" *ngIf="isLast"><strong>Ultimo</strong></span>
+        <span class="text-dark ms-2" *ngIf="isOdd"><strong>Pari</strong></span>
+        <span class="text-dark ms-2" *ngIf="isEven"><strong>Dispari</strong></span>
+    </li>
+
+
+    <ng-template #online>
+        <span class="text-success ms-1"><strong>Online</strong></span>
+    </ng-template>
+
+    <ng-template #offline>
+        <span class="text-danger ms-1"><strong>offline</strong></span>
+    </ng-template>
+    <!-- Mentre qui chiamo la funzione che fa partire l emit  -->
+    <button class="btn btn-danger mt-2" (click)="SendDataToParent()" type="button">Manda dati al padre</button>
+
+</ul>
+
