@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <h2 class="text-center display-1 mt-5">Users</h2>
+            <ul class="list-group mb-4">
+
+
+                <li class="list-group-item d-flex justify-content-start align-items-center"
+                    *ngFor="let person of users; index as i; first as isFirst; last as isLast; odd as isOdd; even as isEven;count as count">
+                    <strong>{{i+1}}</strong>-{{person.name}}
+                    <ng-template *ngIf="person.isOnline;then online, else offline"></ng-template>
+
+                    <!--  ngStyle consente di cambaire lo stile con logiche delle variabili -->
+                    <div class="custom-div mx-1" [ngStyle]="{'background-color': person.isOnline ? 'green' : 'red'}">
+                    </div>
+                    <span class="text-dark ms-2" *ngIf="isFirst"><strong>Primo</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isLast"><strong>Ultimo</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isOdd"><strong>Pari</strong></span>
+                    <span class="text-dark ms-2" *ngIf="isEven"><strong>Dispari</strong></span>
+                    <a href="" routerLink="/serviceUserJson/{{i}}" class="ms-auto"><button class="btn btn-danger ms-2 "  type="button"><strong>Info</strong></button></a>
+                </li>
+             
+
+                <ng-template #online>
+                    <span class="text-success ms-1"><strong>Online</strong></span>
+                </ng-template>
+
+                <ng-template #offline>
+                    <span class="text-danger ms-1"><strong>offline</strong></span>
+                </ng-template>
+
+            </ul>
+
+        </div>
+        <hr>
+        <div>
+            <router-outlet></router-outlet>
+
+        </div>
+    </div>
+</div>
