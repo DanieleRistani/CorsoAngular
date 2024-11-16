@@ -15,8 +15,9 @@ export class ChildOfBuildingComponent implements OnInit {
   @Input() jsonOnChild:User[]=[];
   @Output() outputString= new EventEmitter<string>();
 
+  stringa : string ="Ciao sono stato passato dal componente figlio";
   SendDataToParent(){
-    this.outputString.emit("Ciao sono stato passato da tuo figlio");
+    this.outputString.emit(this.stringa);
   }
   ngOnInit(): void {
     console.log(this.jsonOnChild);
