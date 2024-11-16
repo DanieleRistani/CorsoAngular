@@ -14,10 +14,14 @@ import { RouterLink,RouterOutlet } from '@angular/router';
 export class ServiceUserJsonComponent implements OnInit {
    
   users : User[]=[];
-
+  usersByDb : any[]=[];
   constructor( private userService : UserServiceService) { }
   ngOnInit(): void {
+    this.userService.getUsersByDb().subscribe((data : any )=>{this.usersByDb=data;console.log(this.usersByDb)});
+    
     this.users=this.userService.getUsers();
+    
+    
   }
   
 }

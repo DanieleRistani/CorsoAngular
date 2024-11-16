@@ -1,14 +1,58 @@
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-        <div class="col-4">
-            <h2 class="text-center display-1 mt-5 ">Template variable  & viewChild notation</h2>
-            
-            <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" #name>
-                    <label for="floatingInput">Nome</label>
-            </div>
-             <button class="btn btn-dark" (click)="viewImputValue()" type="button">View</button>
+        <div class="col-4 mb-5">
+            <h2 class="text-center display-1 mt-5 ">Template variable & viewChild notation</h2>
 
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" #name>
+                <label for="floatingInput">Nome</label>
+            </div>
+            <button class="btn btn-dark" (click)="viewImputValue()" type="button">View</button>
+
+        </div>
+        <hr>
+        <div class="col-4 mb-4">
+            <h2 class="text-center display-1 mt-5 ">Driven Form</h2>
+
+            <form #form="ngForm" (ngSubmit)="onSubmitForm()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"  ngModel name="name"/>
+                    <label for="floatingInput">Nome</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"  ngModel name="surename"/>
+                    <label for="floatingInput">Cognome</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingInput" ngModel name="age"/>
+                    <label for="floatingInput">Età</label>
+                </div>
+                <button class="btn btn-dark " type="submit" >Manda</button>
+            </form>
+        </div>
+        <hr>
+        <div class="col-4 mb-4" >
+            <h2 class="text-center display-5 mt-5 ">Reactive Form & Validation & errorMessage</h2>
+
+            <form [formGroup]="userForm">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"   name="name" formControlName="name" [ngClass]="{'is-invalid': userForm.get('name')?.invalid && userForm.get('name')?.touched}"/>
+                    <label for="floatingInput">Nome</label>
+                    <p *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger" class="text-danger">Inserire un nome</p>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"   name="surename" formControlName="surename" [ngClass]="{'is-invalid': userForm.get('surename')?.invalid && userForm.get('surename')?.touched}"/>
+                    <label for="floatingInput">Cognome</label>
+                    <p *ngIf="userForm.get('surename')?.invalid && userForm.get('surename')?.touched" class="text-danger" class="text-danger">Inserire un cognome</p>
+
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingInput"  name="age" formControlName="age" [ngClass]="{'is-invalid': userForm.get('age')?.invalid && userForm.get('age')?.touched}"/>
+                    <label for="floatingInput">Età</label>
+                    <p *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched" class="text-danger" class="text-danger">Inserire un età</p>       
+                </div>
+                <button class="btn btn-dark " type="submit" [disabled]="userForm.invalid" (click)="onSubmitUserFormGroup()">Manda</button>
+            </form>
         </div>
     </div>
 

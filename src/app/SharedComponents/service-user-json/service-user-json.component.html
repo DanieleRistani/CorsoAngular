@@ -33,9 +33,20 @@
 
         </div>
         <hr>
-        <div>
+        <div class="col-4 mb-2">
             <router-outlet></router-outlet>
 
+        </div>
+        <hr>
+        <div class="col-4 mb-5">
+           <h2 class="text-center display-1">Chiamata GET HTTP</h2>
+           <ul class="list-group" >
+            <li class="list-group-item" *ngFor="let user of usersByDb">
+                <p>{{user.name}}</p>
+                <p>{{user.username}}</p>
+                <p>{{user.email}}</p>
+            </li>
+           </ul>
         </div>
     </div>
 </div>
